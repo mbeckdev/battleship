@@ -1,0 +1,28 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "A battleship game against a computer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --mode=production",
+    "dev": "webpack --progress --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbeckdev/battleship.git"
+  },
+  "keywords": [],
+  "author": "mbeckdev",
+  "license": "Unilicense",
+  "bugs": {
+    "url": "https://github.com/mbeckdev/battleship/issues"
+  },
+  "homepage": "https://github.com/mbeckdev/battleship#readme",
+  "devDependencies": {
+    "css-loader": "^6.1.0",
+    "style-loader": "^3.1.0",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
