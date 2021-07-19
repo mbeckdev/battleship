@@ -1,9 +1,32 @@
 // const ship = require('../factories/shipFactory.js');
-import { exportAllDeclaration } from '@babel/types';
+// import { exportAllDeclaration } from '@babel/types';
 // import { test } from 'picomatch';
 import { Ship } from '../factories/shipFactory.js';
 
-test('checks isHit is false', () => {
-  expect(ship(34).isHit).toBe(false);
+// test('hit(1)', () => {
+//   expect(Ship(4).hit(1)).toBe(false);
+// });
+
+describe('Ship factory', () => {
+  const ship = Ship(3);
+  ship.hit(1);
+  test('hit(1)', () => {
+    expect(ship.hits[1]).toBe('hit');
+  });
+  test('isSunk() with one hit should be false', () => {
+    expect(ship.isSunk()).toBe(false);
+  });
 });
-// REMEMBER you only have to test your object’s public interface. Only methods or properties that are used outside of your ‘ship’ object need unit tests.
+
+describe('Ship factory sunk 2length', () => {
+  const ship = Ship(2);
+  ship.hit(0);
+  ship.hit(1);
+  test('isSunk() with two hit should be true', () => {
+    expect(ship.isSunk()).toBe(true);
+  });
+});
+
+// REMEMBER you only have to test your object’s public interface.
+// Only methods or properties that are used outside of your ‘ship’
+// object need unit tests.
