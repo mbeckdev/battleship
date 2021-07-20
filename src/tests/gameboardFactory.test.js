@@ -33,6 +33,25 @@ describe('vertical 2 length ship', () => {
   });
 });
 
+describe('horizontal 2 length ship', () => {
+  let board24 = Gameboard();
+  let shipToAdd = Ship('shipA', 2, [0, 0], true);
+  board24.addShipToBoard(shipToAdd);
+  board24.receiveAttack(0, 0);
+  test('expect(board[0][0]).toBe(shipA)', () => {
+    expect(board24.boardShipLayout[0][0]).toBe('shipA');
+  });
+  test('expect(board[1][0]).toBe(shipA)', () => {
+    expect(board24.boardShipLayout[1][0]).toBe('shipA');
+  });
+  test('expect(board[2][0]).toBe(shipA)', () => {
+    expect(board24.boardShipLayout[2][0]).toBe(null);
+  });
+  test('expect(board[2][0]).toBe(shipA)', () => {
+    expect(shipToAdd.hits[0]).toBe('hit');
+  });
+});
+
 // describe('gameboard', () => {
 //   const board1 = Gameboard();
 //   let shipToAdd = Ship('shipA', 2, [0, 0], true);

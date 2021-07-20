@@ -9,7 +9,10 @@ const Gameboard = function () {
   // let board1 = Gameboard();
   // board1.receiveAttack(2, 4);
 
-  let arrayOfShips = [Ship(2, [0, 0], true), Ship(3, [5, 7], true)];
+  let arrayOfShips = [
+    Ship('destroyer', 2, [0, 0], true),
+    Ship('submarine', 3, [5, 7], true),
+  ];
 
   // receiveAttack determines whether or not the attack
   // hit a ship and
@@ -18,9 +21,30 @@ const Gameboard = function () {
   function receiveAttack(x, y) {
     // has this attack hit a ship?
     arrayOfShips.forEach((aShip) => {
+      for (i = 0; i < aShip.positionsOnBoard.length; i++) {
+        if (
+          aShip.positionsOnBoard[i][0] == x &&
+          aShip.positionsOnBoard[i][1] == y
+        ) {
+          console.log('a hit!');
+          // aShip.hit9numbereeee
+          aShip.hit(i);
+          //check if sunk here??????
+        } else {
+          // document miss
+        }
+      }
+
       aShip.positionsOnBoard.forEach((positionOfPartOfShip) => {
         //check they are the same, if so it's a hit
-        positionOfPartOfShip == x, y; //////////////////fixme
+        // positionOfPartOfShip == x, y; //////////////////fixme
+
+        if (positionOfPartOfShip[0] == x && positionOfPartOfShip[1] == y) {
+          console.log('a hit!');
+          // aShip.hit9numbereeee
+        } else {
+          // document miss
+        }
       });
     });
   }
@@ -39,6 +63,7 @@ const Gameboard = function () {
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
   ];
+
   function addShipToBoard(shipToAdd) {
     shipToAdd.positionsOnBoard.forEach((coords) => {
       let x = coords[0];
