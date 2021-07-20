@@ -10,8 +10,21 @@ const Gameboard = function () {
   // board1.receiveAttack(2, 4);
 
   let arrayOfShips = [
-    Ship('destroyer', 2, [0, 0], true),
-    Ship('submarine', 3, [5, 7], true),
+    // Ship('destroyer', 2, [0, 0], true),
+    // Ship('submarine', 3, [5, 7], true),
+  ];
+
+  let boardHitAndMissLayout = [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
   ];
 
   // receiveAttack determines whether or not the attack
@@ -21,17 +34,19 @@ const Gameboard = function () {
   function receiveAttack(x, y) {
     // has this attack hit a ship?
     arrayOfShips.forEach((aShip) => {
-      for (i = 0; i < aShip.positionsOnBoard.length; i++) {
+      for (let i = 0; i < aShip.positionsOnBoard.length; i++) {
         if (
           aShip.positionsOnBoard[i][0] == x &&
           aShip.positionsOnBoard[i][1] == y
         ) {
-          console.log('a hit!');
-          // aShip.hit9numbereeee
+          // a hit!
           aShip.hit(i);
-          //check if sunk here??????
+          boardHitAndMissLayout[x][y] = 'hit';
+          // check if sunk here??????
         } else {
           // document miss
+
+          boardHitAndMissLayout[x][y] = 'miss';
         }
       }
 
@@ -65,6 +80,7 @@ const Gameboard = function () {
   ];
 
   function addShipToBoard(shipToAdd) {
+    arrayOfShips.push(shipToAdd); // for use in receiveAttack later
     shipToAdd.positionsOnBoard.forEach((coords) => {
       let x = coords[0];
       let y = coords[1];
@@ -82,6 +98,7 @@ const Gameboard = function () {
 
   return {
     addShipToBoard,
+    boardHitAndMissLayout,
     boardShipLayout,
     receiveAttack,
     // setupBoard,
