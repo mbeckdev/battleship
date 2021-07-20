@@ -1,14 +1,15 @@
 // const ship = require('../factories/shipFactory.js');
 // import { exportAllDeclaration } from '@babel/types';
 // import { test } from 'picomatch';
-import { Ship } from '../factories/shipFactory.js';
+// import { Ship } from '../factories/shipFactory.js';
+import Ship from '../factories/shipFactory.js';
 
 // test('hit(1)', () => {
 //   expect(Ship(4).hit(1)).toBe(false);
 // });
 
 describe('Ship factory', () => {
-  const ship = Ship(3);
+  const ship = Ship('shipB', 3, [0, 0], true);
   ship.hit(1);
   test('hit(1)', () => {
     expect(ship.hits[1]).toBe('hit');
@@ -19,7 +20,7 @@ describe('Ship factory', () => {
 });
 
 describe('Ship factory sunk 2length', () => {
-  const ship = Ship(2);
+  const ship = Ship('shipC', 2, [0, 0], true);
   ship.hit(0);
   ship.hit(1);
   test('isSunk() with two hit should be true', () => {
