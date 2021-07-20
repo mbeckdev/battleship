@@ -57,6 +57,33 @@ describe('horizontal 2 length ship', () => {
   });
 });
 
+describe('Ship factory sunk 2length check allShipsSunk', () => {
+  let board24 = Gameboard();
+  let shipToAdd = Ship('shipA', 2, [0, 0], true);
+  board24.addShipToBoard(shipToAdd);
+  let shipToAdd2 = Ship('shipB', 2, [0, 1], true);
+  board24.addShipToBoard(shipToAdd2);
+  board24.receiveAttack(0, 0);
+  board24.receiveAttack(1, 0);
+  board24.receiveAttack(0, 1);
+  board24.receiveAttack(1, 1);
+
+  test('all Ships sunk = true', () => {
+    expect(board24.allShipsSunk()).toBe(true);
+  });
+});
+
+describe('Ship factory sunk 2length check allShipsSunk', () => {
+  let board24 = Gameboard();
+  let shipToAdd = Ship('shipA', 2, [0, 0], true);
+  board24.addShipToBoard(shipToAdd);
+  board24.receiveAttack(0, 0);
+
+  test('all Ships sunk = false', () => {
+    expect(board24.allShipsSunk()).toBe(false);
+  });
+});
+
 // describe('gameboard', () => {
 //   const board1 = Gameboard();
 //   let shipToAdd = Ship('shipA', 2, [0, 0], true);

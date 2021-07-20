@@ -50,17 +50,17 @@ const Gameboard = function () {
         }
       }
 
-      aShip.positionsOnBoard.forEach((positionOfPartOfShip) => {
-        //check they are the same, if so it's a hit
-        // positionOfPartOfShip == x, y; //////////////////fixme
+      // aShip.positionsOnBoard.forEach((positionOfPartOfShip) => {
+      //   //check they are the same, if so it's a hit
+      //   // positionOfPartOfShip == x, y; //////////////////fixme
 
-        if (positionOfPartOfShip[0] == x && positionOfPartOfShip[1] == y) {
-          console.log('a hit!');
-          // aShip.hit9numbereeee
-        } else {
-          // document miss
-        }
-      });
+      //   if (positionOfPartOfShip[0] == x && positionOfPartOfShip[1] == y) {
+      //     console.log('a hit!');
+      //     // aShip.hit9numbereeee
+      //   } else {
+      //     // document miss
+      //   }
+      // });
     });
   }
 
@@ -90,14 +90,19 @@ const Gameboard = function () {
     });
   }
 
-  // function setupBoard() {
-  //   let ship2Long = Ship(2);
-  //   // ship2Long.hi
-  // }
-  // function placeShips() {}
+  function allShipsSunk() {
+    for (let i = 0; i < arrayOfShips.length; i++) {
+      if (arrayOfShips[i].isSunk()) {
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
   return {
     addShipToBoard,
+    allShipsSunk,
     boardHitAndMissLayout,
     boardShipLayout,
     receiveAttack,
