@@ -44,7 +44,7 @@ describe('horizontal 2 length ship', () => {
   test('expect(board[1][0]).toBe(shipA)', () => {
     expect(board24.boardShipLayout[1][0]).toBe('shipA');
   });
-  test('expect(board[2][0]).toBe(shipA)', () => {
+  test('expect(board[2][0]).toBe(null)', () => {
     expect(board24.boardShipLayout[2][0]).toBe(null);
   });
   test('shipToAdd.hits[0]).toBe("hit")', () => {

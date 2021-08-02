@@ -49,18 +49,6 @@ const Gameboard = function () {
           boardHitAndMissLayout[x][y] = 'miss';
         }
       }
-
-      // aShip.positionsOnBoard.forEach((positionOfPartOfShip) => {
-      //   //check they are the same, if so it's a hit
-      //   // positionOfPartOfShip == x, y; //////////////////fixme
-
-      //   if (positionOfPartOfShip[0] == x && positionOfPartOfShip[1] == y) {
-      //     console.log('a hit!');
-      //     // aShip.hit9numbereeee
-      //   } else {
-      //     // document miss
-      //   }
-      // });
     });
   }
 
