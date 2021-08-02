@@ -73,7 +73,7 @@ describe('Ship factory sunk 2length check allShipsSunk', () => {
   });
 });
 
-describe('Ship factory sunk 2length check allShipsSunk', () => {
+describe('Ship factory sunk 2length check allShipsSunk false', () => {
   let board24 = Gameboard();
   let shipToAdd = Ship('shipA', 2, [0, 0], true);
   board24.addShipToBoard(shipToAdd);
@@ -81,6 +81,35 @@ describe('Ship factory sunk 2length check allShipsSunk', () => {
 
   test('all Ships sunk = false', () => {
     expect(board24.allShipsSunk()).toBe(false);
+  });
+});
+
+describe('Ship factory sunk 2length check allShipsSunk true', () => {
+  let board24 = Gameboard();
+  let shipToAdd = Ship('shipA', 2, [0, 0], true);
+  board24.addShipToBoard(shipToAdd);
+  board24.receiveAttack(0, 0);
+  board24.receiveAttack(1, 0);
+
+  test('all Ships sunk = true', () => {
+    expect(board24.allShipsSunk()).toBe(true);
+  });
+});
+
+describe('Ship factory sunk 2length &3length sunk check allShipsSunk true', () => {
+  let board24 = Gameboard();
+  let shipToAdd = Ship('shipA', 2, [0, 0], true);
+  board24.addShipToBoard(shipToAdd);
+  board24.receiveAttack(0, 0);
+  board24.receiveAttack(1, 0);
+  let shipToAddB = Ship('shipB', 3, [0, 1], true);
+  board24.addShipToBoard(shipToAddB);
+  board24.receiveAttack(0, 1);
+  board24.receiveAttack(1, 1);
+  board24.receiveAttack(2, 1);
+
+  test('all Ships sunk = true', () => {
+    expect(board24.allShipsSunk()).toBe(true);
   });
 });
 
