@@ -1,4 +1,5 @@
 'use strict';
+import dom from '../module-patterns/dom.js';
 // import { Ship } from '.shipFactory.js';
 import Ship from './shipFactory.js';
 
@@ -42,6 +43,7 @@ const Gameboard = function () {
           // a hit!
           aShip.hit(i);
           boardHitAndMissLayout[x][y] = 'hit';
+          // dom.showHit(x, y);
           // check if sunk here??????
         } else {
           // document miss

@@ -41,14 +41,44 @@ const game = (function () {
     dom.addShipClassesToBoard(gameboardA, dom.domElements.gridA);
     dom.addShipClassesToBoard(gameboardB, dom.domElements.gridB);
 
+    dom.allowClickToHit();
     // playerA.attack(x, y, gameboardB)
   }
 
   function startGame() {
     console.log('starting game...');
+    // game loop here
+
+    // Your turn
+    //   - you're allowed to click only in gridB,
+    //   - gridA events should be disabled
+    //   - check GameOver
+    //   - Switch whose turn
+
+    // Computer turn
+    //   - you should not be allowed to click.
+    //   - set a bit of a wait after computer's turn is over
+    //   - check GameOver
+    //   - Switch whose turn
+  }
+
+  function handleHitInGridA(e) {
+    // find x and y of click
+    console.log(e.target);
+    let xCoord = e.target.dataset.id[0];
+    let yCoord = e.target.dataset.id[1];
+    playerB.attack(xCoord, yCoord, gameboardA);
+  }
+
+  function handleHitInGridB() {
+    let xCoord = e.target.dataset.id[0];
+    let yCoord = e.target.dataset.id[1];
+    playerA.attack(xCoord, yCoord, gameboardB);
   }
 
   return {
+    handleHitInGridA,
+    handleHitInGridB,
     setupGame,
     startGame,
   };

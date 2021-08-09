@@ -1,5 +1,7 @@
 'use strict';
 
+import game from './game.js';
+
 const dom = (function () {
   // let gridA = document.getElementById('gridA');
   // let gridB = document.getElementById('gridB');
@@ -43,10 +45,25 @@ const dom = (function () {
     }
   }
 
+  function allowClickToHit() {
+    for (let i = 0; i < gridA.children.length; i++) {
+      gridA.children[i].addEventListener('click', game.handleHitInGridA);
+    }
+    for (let i = 0; i < gridB.children.length; i++) {
+      gridB.children[i].addEventListener('click', game.handleHitInGridB);
+    }
+  }
+
+  // function showHit(x, y) {
+  //   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa show hit tbd');
+  // }
+
   return {
+    addShipClassesToBoard,
+    allowClickToHit,
     createDivsInGrid,
     domElements,
-    addShipClassesToBoard,
+    // showHit,
   };
 })();
 
