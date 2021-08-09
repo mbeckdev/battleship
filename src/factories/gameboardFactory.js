@@ -75,6 +75,8 @@ const Gameboard = function () {
 
       // add these coords to board
       boardShipLayout[x][y] = shipToAdd.name;
+      // boardShipLayout will not look like actual board, sort of flipped, but will work.
+      // like array of [1][0] will look vertical, but we're not writing to screen like so it works.
     });
   }
 
@@ -91,6 +93,7 @@ const Gameboard = function () {
   return {
     addShipToBoard,
     allShipsSunk,
+    arrayOfShips,
     boardHitAndMissLayout,
     boardShipLayout,
     receiveAttack,

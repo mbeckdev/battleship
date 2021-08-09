@@ -22,9 +22,31 @@ const dom = (function () {
     }
   }
 
+  function addShipClassesToBoard(someBoard, domGrid) {
+    // go through all ships on board
+    for (let i = 0; i < someBoard.arrayOfShips.length; i++) {
+      // go through all of the positions of that ship
+      for (
+        let j = 0;
+        j < someBoard.arrayOfShips[i].positionsOnBoard.length;
+        j++
+      ) {
+        let xPosition = someBoard.arrayOfShips[i].positionsOnBoard[j][0];
+        let yPosition = someBoard.arrayOfShips[i].positionsOnBoard[j][1];
+
+        // find the div with these coordinates
+        let selector = `[data-id="${xPosition}${yPosition}"]`;
+        let thisDiv = domGrid.querySelector(selector);
+
+        thisDiv.classList.add('ship');
+      }
+    }
+  }
+
   return {
     createDivsInGrid,
     domElements,
+    addShipClassesToBoard,
   };
 })();
 
