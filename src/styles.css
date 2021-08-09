@@ -31,5 +31,18 @@
 
 body {
   background-color: lightblue;
-  /* background-color: blue; */
 }
+
+/* *********** GRID SYTLING *********** */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  grid-template-rows: repeat(10, 20px);
+  margin: 10px;
+}
+
+.grid-square {
+  background-color: red;
+  border: 1px solid black;
+}
+/* *********** GRID SYTLING END *********** */

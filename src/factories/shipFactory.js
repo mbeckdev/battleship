@@ -56,6 +56,7 @@ const Ship = function (aName, aLength, abeginningPosition, horizontal) {
     isSunk,
     hit,
     positionsOnBoard,
+    isHorizontal,
   };
 };
 
