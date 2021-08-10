@@ -30,7 +30,7 @@
 }
 
 body {
-  background-color: lightblue;
+  background-color: rgb(138, 168, 180);
 }
 
 /* *********** GRID SYTLING *********** */
@@ -42,19 +42,23 @@ body {
 }
 
 .grid-square {
-  background-color: red;
+  background-color: rgb(207, 234, 235);
   border: 1px solid black;
 }
 
 .ship {
-  background-color: teal;
+  background-color: rgb(52, 63, 63);
 }
 
 .hit {
-  background-color: lightcoral;
+  background-color: rgb(196, 26, 26);
 }
 
 .miss {
-  background-color: lightgoldenrodyellow;
+  background-color: rgb(65, 163, 243);
+}
+
+.mask {
+  background-color: rgb(207, 234, 235);
 }
 /* *********** GRID SYTLING END *********** */

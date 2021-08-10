@@ -41,6 +41,8 @@ const game = (function () {
 
     dom.addShipClassesToBoard(gameboardA, dom.domElements.gridA);
     dom.addShipClassesToBoard(gameboardB, dom.domElements.gridB);
+
+    dom.maskGrid(dom.domElements.gridB);
   }
 
   let gameIsOver = false;

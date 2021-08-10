@@ -45,6 +45,12 @@ const dom = (function () {
     }
   }
 
+  function maskGrid(gridToHide) {
+    for (let i = 0; i < gridToHide.children.length; i++) {
+      gridToHide.children[i].classList.add('mask');
+    }
+  }
+
   function allowClickInGridA() {
     for (let i = 0; i < gridA.children.length; i++) {
       gridA.children[i].addEventListener('click', game.handleHitInGridA);
@@ -76,6 +82,7 @@ const dom = (function () {
     }
     let selector = `[data-id="${x}${y}"]`;
     let thisDiv = thisGrid.querySelector(selector);
+    thisDiv.classList.remove('mask');
     thisDiv.classList.add('hit');
   }
 
@@ -89,11 +96,13 @@ const dom = (function () {
     }
     let selector = `[data-id="${x}${y}"]`;
     let thisDiv = thisGrid.querySelector(selector);
+    thisDiv.classList.remove('mask');
     thisDiv.classList.add('miss');
   }
 
   return {
     addShipClassesToBoard,
+    maskGrid,
     allowClickInGridA,
     allowClickInGridB,
     disallowClickInGridA,
