@@ -10,6 +10,7 @@ const dom = (function () {
   const domElements = {
     gridA: document.getElementById('gridA'),
     gridB: document.getElementById('gridB'),
+    winLoseMessage: document.getElementById('win-lose-message'),
   };
 
   // starting from top left, 100 divs are created 10 x 10
@@ -100,6 +101,10 @@ const dom = (function () {
     thisDiv.classList.add('miss');
   }
 
+  function showWinner(player) {
+    dom.domElements.winLoseMessage.textContent = `${player.playerName} won!`;
+  }
+
   return {
     addShipClassesToBoard,
     maskGrid,
@@ -111,6 +116,7 @@ const dom = (function () {
     domElements,
     showHit,
     showMiss,
+    showWinner,
   };
 })();
 

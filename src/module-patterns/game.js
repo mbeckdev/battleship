@@ -14,22 +14,22 @@ const game = (function () {
 
   // setupGame();
   function setupGame() {
-    let shipA = Ship('Bob', 3, [0, 0], true);
-    let shipB = Ship('BobB', 2, [0, 1], true);
-    let shipC = Ship('BobC', 3, [0, 2], true);
-    let shipD = Ship('BobD', 5, [0, 3], true);
-    let shipE = Ship('BobE', 3, [0, 4], true);
+    let shipA = Ship('destroyer', 2, [0, 0], true);
+    let shipB = Ship('submarine', 3, [0, 1], true);
+    let shipC = Ship('cruiser', 3, [0, 2], true);
+    let shipD = Ship('battleship', 4, [0, 3], true);
+    let shipE = Ship('carrier', 5, [0, 4], true);
     gameboardA.addShipToBoard(shipA);
     gameboardA.addShipToBoard(shipB);
     gameboardA.addShipToBoard(shipC);
     gameboardA.addShipToBoard(shipD);
     gameboardA.addShipToBoard(shipE);
 
-    let bShipA = Ship('Bob', 3, [0, 0], false);
-    let bShipB = Ship('BobB', 2, [1, 0], false);
-    let bShipC = Ship('BobC', 3, [2, 0], false);
-    let bShipD = Ship('BobD', 5, [3, 0], false);
-    let bShipE = Ship('BobE', 3, [4, 0], false);
+    let bShipA = Ship('destroyer', 2, [0, 0], false);
+    let bShipB = Ship('submarine', 3, [1, 0], false);
+    let bShipC = Ship('cruiser', 3, [2, 0], false);
+    let bShipD = Ship('battleship', 4, [3, 0], false);
+    let bShipE = Ship('carrier', 5, [4, 0], false);
     gameboardB.addShipToBoard(bShipA);
     gameboardB.addShipToBoard(bShipB);
     gameboardB.addShipToBoard(bShipC);
@@ -83,9 +83,15 @@ const game = (function () {
   function checkGameOver() {
     if (gameboardA.allShipsSunk()) {
       gameIsOver = true;
+      dom.showWinner(game.playerB);
+      dom.disallowClickInGridA();
+      dom.disallowClickInGridB();
     }
     if (gameboardB.allShipsSunk()) {
       gameIsOver = true;
+      dom.showWinner(game.playerA);
+      dom.disallowClickInGridA();
+      dom.disallowClickInGridB();
     }
   }
 
@@ -116,6 +122,8 @@ const game = (function () {
     gameboardA,
     gameboardB,
     itsPlayerAsTurn,
+    playerA,
+    playerB,
   };
 })();
 
