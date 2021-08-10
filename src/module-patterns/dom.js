@@ -45,12 +45,24 @@ const dom = (function () {
     }
   }
 
-  function allowClickToHit() {
+  function allowClickInGridA() {
     for (let i = 0; i < gridA.children.length; i++) {
       gridA.children[i].addEventListener('click', game.handleHitInGridA);
     }
+  }
+  function allowClickInGridB() {
     for (let i = 0; i < gridB.children.length; i++) {
       gridB.children[i].addEventListener('click', game.handleHitInGridB);
+    }
+  }
+  function disallowClickInGridA() {
+    for (let i = 0; i < gridA.children.length; i++) {
+      gridA.children[i].removeEventListener('click', game.handleHitInGridA);
+    }
+  }
+  function disallowClickInGridB() {
+    for (let i = 0; i < gridB.children.length; i++) {
+      gridB.children[i].removeEventListener('click', game.handleHitInGridB);
     }
   }
 
@@ -60,7 +72,10 @@ const dom = (function () {
 
   return {
     addShipClassesToBoard,
-    allowClickToHit,
+    allowClickInGridA,
+    allowClickInGridB,
+    disallowClickInGridA,
+    disallowClickInGridB,
     createDivsInGrid,
     domElements,
     // showHit,

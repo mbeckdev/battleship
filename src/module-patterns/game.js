@@ -40,26 +40,48 @@ const game = (function () {
 
     dom.addShipClassesToBoard(gameboardA, dom.domElements.gridA);
     dom.addShipClassesToBoard(gameboardB, dom.domElements.gridB);
-
-    dom.allowClickToHit();
-    // playerA.attack(x, y, gameboardB)
   }
 
+  let gameIsOver = false;
   function startGame() {
-    console.log('starting game...');
-    // game loop here
+    playerAsTurn();
+  }
 
-    // Your turn
-    //   - you're allowed to click only in gridB,
-    //   - gridA events should be disabled
-    //   - check GameOver
-    //   - Switch whose turn
+  function playerAsTurn() {
+    dom.disallowClickInGridA();
+    dom.allowClickInGridB();
+    // then you click in grid B,
+    // gridB has an eventlistener that says after click, go to
+    //    game.handleHitInGridB()
+  }
 
+  function playerBsTurn() {
     // Computer turn
     //   - you should not be allowed to click.
-    //   - set a bit of a wait after computer's turn is over
+    dom.disallowClickInGridB();
+    // dom.allowClickInGridA();
+
+    // Computer takes a turn here
+    let newCoords = playerB.computerTakeRandomGuess();
+    playerB.attack(newCoords[0], newCoords[1], gameboardA);
+
+    //           - set a bit of a wait after computer's turn is over
+    //             setTimeout(console.log('waiting'), 1 * 3000);
     //   - check GameOver
+    checkGameOver();
+    if (!gameIsOver) {
+      playerAsTurn();
+    }
     //   - Switch whose turn
+  }
+
+  function checkGameOver() {
+    if (gameboardA.allShipsSunk()) {
+      gameIsOver = true;
+    }
+    if (gameboardB.allShipsSunk()) {
+      gameIsOver = true;
+    }
   }
 
   function handleHitInGridA(e) {
@@ -70,10 +92,15 @@ const game = (function () {
     playerB.attack(xCoord, yCoord, gameboardA);
   }
 
-  function handleHitInGridB() {
+  function handleHitInGridB(e) {
     let xCoord = e.target.dataset.id[0];
     let yCoord = e.target.dataset.id[1];
     playerA.attack(xCoord, yCoord, gameboardB);
+
+    checkGameOver();
+    if (!gameIsOver) {
+      playerBsTurn();
+    }
   }
 
   return {
