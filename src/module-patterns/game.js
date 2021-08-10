@@ -10,6 +10,7 @@ const game = (function () {
   let playerB = Player('Computer');
   let gameboardA = Gameboard(dom.domElements.gridA);
   let gameboardB = Gameboard(dom.domElements.gridB);
+  let itsPlayerAsTurn = true;
 
   // setupGame();
   function setupGame() {
@@ -48,6 +49,7 @@ const game = (function () {
   }
 
   function playerAsTurn() {
+    game.itsPlayerAsTurn = true;
     dom.disallowClickInGridA();
     dom.allowClickInGridB();
     // then you click in grid B,
@@ -57,6 +59,7 @@ const game = (function () {
 
   function playerBsTurn() {
     // Computer turn
+    game.itsPlayerAsTurn = false;
     //   - you should not be allowed to click.
     dom.disallowClickInGridB();
     // dom.allowClickInGridA();
@@ -108,6 +111,9 @@ const game = (function () {
     handleHitInGridB,
     setupGame,
     startGame,
+    gameboardA,
+    gameboardB,
+    itsPlayerAsTurn,
   };
 })();
 

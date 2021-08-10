@@ -2,6 +2,7 @@
 import dom from '../module-patterns/dom.js';
 // import { Ship } from '.shipFactory.js';
 import Ship from './shipFactory.js';
+import game from '../module-patterns/game.js';
 
 // Gameboards should be able to place ships at specific
 // coordinates by calling the ship factory function
@@ -34,6 +35,7 @@ const Gameboard = function () {
   // or records the coordinates of the missed shot.
   function receiveAttack(x, y) {
     // has this attack hit a ship?
+    let hitFound = false;
     arrayOfShips.forEach((aShip) => {
       for (let i = 0; i < aShip.positionsOnBoard.length; i++) {
         if (
@@ -41,17 +43,23 @@ const Gameboard = function () {
           aShip.positionsOnBoard[i][1] == y
         ) {
           // a hit!
+          hitFound = true;
           aShip.hit(i);
           boardHitAndMissLayout[x][y] = 'hit';
-          // dom.showHit(x, y);
+          game.gameboardA.allShipsSunk();
+          dom.showHit(x, y);
           // check if sunk here??????
         } else {
-          // document miss
-
-          boardHitAndMissLayout[x][y] = 'miss';
+          // these coordinates dont match this ship section.
         }
       }
     });
+
+    if (!hitFound) {
+      // x,y doesn't match any ship section, so it's a miss
+      boardHitAndMissLayout[x][y] = 'miss';
+      dom.showMiss(x, y);
+    }
   }
 
   // let shipToAdd = Ship(2, [0, 0], true);

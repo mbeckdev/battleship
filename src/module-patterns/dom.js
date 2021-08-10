@@ -66,9 +66,31 @@ const dom = (function () {
     }
   }
 
-  // function showHit(x, y) {
-  //   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa show hit tbd');
-  // }
+  function showHit(x, y) {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa show hit tbd');
+    let thisGrid = '';
+    if (game.itsPlayerAsTurn) {
+      thisGrid = gridB;
+    } else {
+      thisGrid = gridA;
+    }
+    let selector = `[data-id="${x}${y}"]`;
+    let thisDiv = thisGrid.querySelector(selector);
+    thisDiv.classList.add('hit');
+  }
+
+  function showMiss(x, y) {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa show miss tbd');
+    let thisGrid = '';
+    if (game.itsPlayerAsTurn) {
+      thisGrid = gridB;
+    } else {
+      thisGrid = gridA;
+    }
+    let selector = `[data-id="${x}${y}"]`;
+    let thisDiv = thisGrid.querySelector(selector);
+    thisDiv.classList.add('miss');
+  }
 
   return {
     addShipClassesToBoard,
@@ -78,7 +100,8 @@ const dom = (function () {
     disallowClickInGridB,
     createDivsInGrid,
     domElements,
-    // showHit,
+    showHit,
+    showMiss,
   };
 })();
 
