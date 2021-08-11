@@ -12,6 +12,14 @@ const game = (function () {
   let gameboardB = Gameboard(dom.domElements.gridB);
   let itsPlayerAsTurn = true;
 
+  let ships = {
+    destroyer: Ship('destroyer', 2, [0, 0], true),
+    submarine: Ship('submarine', 3, [0, 1], true),
+    cruiser: Ship('cruiser', 3, [0, 2], true),
+    battleship: Ship('battleship', 4, [0, 3], true),
+    carrier: Ship('carrier', 5, [0, 4], true),
+  };
+
   // setupGame();
   function setupGame() {
     let shipA = Ship('destroyer', 2, [0, 0], true);
@@ -43,6 +51,8 @@ const game = (function () {
     dom.addShipClassesToBoard(gameboardB, dom.domElements.gridB);
 
     dom.maskGrid(dom.domElements.gridB);
+
+    dom.addDragAndDropEvents();
   }
 
   let gameIsOver = false;
@@ -124,6 +134,7 @@ const game = (function () {
     itsPlayerAsTurn,
     playerA,
     playerB,
+    ships,
   };
 })();
 

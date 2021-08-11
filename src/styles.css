@@ -33,6 +33,55 @@ body {
   background-color: rgb(138, 168, 180);
 }
 
+/* *********** DRAG WINDOW *********** */
+#ship-holder {
+  width: 200px;
+  height: 200px;
+  /* background-color: blue; */
+  margin: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ship-holder div div {
+  width: 20px;
+  height: 20px;
+  background-color: blueviolet;
+  border: 1px solid black;
+
+  display: block;
+}
+
+#ship-holder > div {
+  margin-bottom: 5px;
+}
+
+.destroyer-container {
+  display: flex;
+  width: 40px;
+}
+.submarine-container {
+  display: flex;
+  width: 60px;
+}
+.cruiser-container {
+  display: flex;
+  width: 60px;
+}
+.battleship-container {
+  display: flex;
+  width: 80px;
+}
+.carrier-container {
+  display: flex;
+  width: 100px;
+}
+.ship-holder-square {
+}
+/* *********** DRAG WINDOW END *********** */
+
 /* *********** GRID SYTLING *********** */
 .grid {
   display: grid;
