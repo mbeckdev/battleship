@@ -142,12 +142,16 @@ const game = (function () {
 
   function areCoordsValid(x, y) {
     let withinBoard = _withinBoard(x, y);
-    let notOnAnotherShip = _notOnAnotherShip(x, y);
-    if (withinBoard && notOnAnotherShip) {
-      return true;
-    } else {
-      return false;
+    let returnThing = false;
+
+    if (withinBoard) {
+      let notOnAnotherShip = _notOnAnotherShip(x, y);
+      if (notOnAnotherShip) {
+        returnThing = true;
+      }
     }
+
+    return returnThing;
   }
 
   function _withinBoard(x, y) {

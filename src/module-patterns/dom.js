@@ -253,6 +253,9 @@ const dom = (function () {
       // let shipToAddNow = game.ships[draggedShipName];
       game.gameboardA.addShipToBoard(newShip);
       addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
+
+      // hide ship
+      draggedShip.classList.add('hidden');
     }
   }
 

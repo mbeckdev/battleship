@@ -80,6 +80,11 @@ body {
 }
 .ship-holder-square {
 }
+
+.hidden {
+  display: none;
+  /* visibility: hidden; */
+}
 /* *********** DRAG WINDOW END *********** */
 
 /* *********** GRID SYTLING *********** */
