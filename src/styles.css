@@ -41,8 +41,8 @@ body {
   margin: 10px;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  align-items: flex-start;
 }
 
 #ship-holder div div {
@@ -55,28 +55,28 @@ body {
 }
 
 #ship-holder > div {
-  margin-bottom: 5px;
+  margin: 3px;
 }
 
 .destroyer-container {
   display: flex;
-  width: 40px;
+  /* width: 40px; */
 }
 .submarine-container {
   display: flex;
-  width: 60px;
+  /* width: 60px; */
 }
 .cruiser-container {
   display: flex;
-  width: 60px;
+  /* width: 60px; */
 }
 .battleship-container {
   display: flex;
-  width: 80px;
+  /* width: 80px; */
 }
 .carrier-container {
   display: flex;
-  width: 100px;
+  /* width: 100px; */
 }
 .ship-holder-square {
 }
@@ -84,6 +84,17 @@ body {
 .hidden {
   display: none;
   /* visibility: hidden; */
+}
+
+.ship-holder-verticals {
+  flex-direction: row;
+}
+.ship-holder-horizontals {
+  flex-direction: column;
+}
+
+.ship-is-vertical {
+  flex-direction: column;
 }
 /* *********** DRAG WINDOW END *********** */
 

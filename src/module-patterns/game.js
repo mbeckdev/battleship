@@ -69,6 +69,7 @@ const game = (function () {
     dom.maskGrid(dom.domElements.gridB);
 
     dom.addDragAndDropEvents();
+    dom.addEventListenerToButtons();
   }
 
   let gameIsOver = false;

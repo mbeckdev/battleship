@@ -12,6 +12,8 @@ const dom = (function () {
     gridA: document.getElementById('gridA'),
     gridB: document.getElementById('gridB'),
     winLoseMessage: document.getElementById('win-lose-message'),
+    rotateShipButton: document.getElementById('rotate-ship-button'),
+    shipHolder: document.getElementById('ship-holder'),
     draggableShips: {
       destroyerContainer: document.querySelector('.destroyer-container'),
       submarineContainer: document.querySelector('.submarine-container'),
@@ -280,6 +282,37 @@ const dom = (function () {
   //   console.log('dragEnd');
   // }
 
+  function addEventListenerToButtons() {
+    dom.domElements.rotateShipButton.addEventListener('click', rotateShips);
+  }
+
+  function rotateShips() {
+    //take ship=holder, make it
+
+    // if horiz, make it vertical
+    if (game.draggedShipsAreHorizontal) {
+      dom.domElements.shipHolder.classList.remove('ship-holder-horizontals');
+      dom.domElements.shipHolder.classList.add('ship-holder-verticals');
+      game.draggedShipsAreHorizontal = false;
+
+      let shipContainers = dom.domElements.draggableShips;
+      for (let ship in shipContainers) {
+        let domShip = shipContainers[ship];
+        domShip.classList.add('ship-is-vertical');
+      }
+    } else {
+      dom.domElements.shipHolder.classList.add('ship-holder-horizontals');
+      dom.domElements.shipHolder.classList.remove('ship-holder-verticals');
+      game.draggedShipsAreHorizontal = true;
+
+      let shipContainers = dom.domElements.draggableShips;
+      for (let ship in shipContainers) {
+        let domShip = shipContainers[ship];
+        domShip.classList.remove('ship-is-vertical');
+      }
+    }
+  }
+
   return {
     addDragAndDropEvents,
     addShipClassesToBoard,
@@ -293,6 +326,7 @@ const dom = (function () {
     showHit,
     showMiss,
     showWinner,
+    addEventListenerToButtons,
   };
 })();
 
