@@ -168,16 +168,13 @@ const dom = (function () {
     console.log(this);
     console.log(this.dataset.id);
 
-    let dropShip = this;
-
-    let dropDiv = this;
     let dropDivCoords = this.dataset.id;
     let xDropCoord = Number(dropDivCoords[0]);
     let yDropCoord = Number(dropDivCoords[1]);
 
     //find id .. got it
 
-    // find what ship will be adding?
+    // find what ship will be added?
     let firstDivOfDraggedShip = draggedShip.children[0];
     let idOfFirstDiv = firstDivOfDraggedShip.id;
     let draggedShipName = idOfFirstDiv.slice(0, -2); //'destroyer' etc.
@@ -228,7 +225,7 @@ const dom = (function () {
         newY = newShipYStart;
       } else {
         newX = newShipXStart;
-        newY = newShipYStart + 1;
+        newY = newShipYStart + i;
       }
       allShipCoords.push([newX, newY]);
     }
@@ -249,7 +246,7 @@ const dom = (function () {
         draggedShipName,
         shipLength,
         [newShipXStart, newShipYStart],
-        true
+        game.draggedShipsAreHorizontal
       );
 
       // let shipToAddNow = game.ships[draggedShipName];
