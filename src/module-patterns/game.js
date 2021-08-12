@@ -140,6 +140,14 @@ const game = (function () {
     }
   }
 
+  function areCoordsValid(x, y) {
+    if (x >= 0 && x <= 9) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return {
     handleHitInGridA,
     handleHitInGridB,
@@ -152,6 +160,7 @@ const game = (function () {
     playerB,
     ships,
     draggedShipsAreHorizontal,
+    areCoordsValid,
   };
 })();
 

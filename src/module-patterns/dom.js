@@ -200,17 +200,36 @@ const dom = (function () {
       newShipYStart = yDropCoord - indexOfClickedSquareInShip;
     }
 
-    // let newShip = Ship('destroyer', 2, [9,0], true)
-    let newShip = Ship(
-      draggedShipName,
-      shipLength,
-      [newShipXStart, newShipYStart],
-      true
-    );
+    // is starting point valid?
+    // is ending point valid?
+    //  what is ending x,y?
 
-    // let shipToAddNow = game.ships[draggedShipName];
-    game.gameboardA.addShipToBoard(newShip);
-    addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
+    let newShipXEnd = undefined;
+    let newShipYEnd = undefined;
+    if (game.draggedShipsAreHorizontal) {
+      newShipXEnd = newShipXStart + shipLength - 1;
+      newShipYEnd = newShipYStart;
+    } else {
+      newShipYEnd = newShipYStart + shipLength - 1;
+      newShipXEnd = newShipXStart;
+    }
+
+    if (
+      game.areCoordsValid(newShipXStart, newShipYStart) &&
+      game.areCoordsValid(newShipXEnd, newShipYEnd)
+    ) {
+      // let newShip = Ship('destroyer', 2, [9,0], true)
+      let newShip = Ship(
+        draggedShipName,
+        shipLength,
+        [newShipXStart, newShipYStart],
+        true
+      );
+
+      // let shipToAddNow = game.ships[draggedShipName];
+      game.gameboardA.addShipToBoard(newShip);
+      addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
+    }
   }
 
   // function _dragDrop() {
