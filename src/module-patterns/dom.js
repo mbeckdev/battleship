@@ -214,10 +214,34 @@ const dom = (function () {
       newShipXEnd = newShipXStart;
     }
 
-    if (
-      game.areCoordsValid(newShipXStart, newShipYStart) &&
-      game.areCoordsValid(newShipXEnd, newShipYEnd)
-    ) {
+    // let _allCoordsOfShipAreValid = false;
+
+    // find coords of other squares in ship. if any
+    let allShipCoords = []; //ie [[0,0],[1,0],[2,0]]
+    for (let i = 0; i < shipLength; i++) {
+      let newX = undefined;
+      let newY = undefined;
+      if (game.draggedShipsAreHorizontal) {
+        newX = newShipXStart + i;
+        newY = newShipYStart;
+      } else {
+        newX = newShipXStart;
+        newY = newShipYStart + 1;
+      }
+      allShipCoords.push([newX, newY]);
+    }
+
+    let allShipCoordsAreValid = 0;
+
+    for (let i = 0; i < allShipCoords.length; i++) {
+      if (game.areCoordsValid(allShipCoords[i][0], allShipCoords[i][1])) {
+      } else {
+        allShipCoordsAreValid++;
+      }
+    }
+
+    if (allShipCoordsAreValid == 0) {
+      // all are valid
       // let newShip = Ship('destroyer', 2, [9,0], true)
       let newShip = Ship(
         draggedShipName,

@@ -141,7 +141,26 @@ const game = (function () {
   }
 
   function areCoordsValid(x, y) {
-    if (x >= 0 && x <= 9) {
+    let withinBoard = _withinBoard(x, y);
+    let notOnAnotherShip = _notOnAnotherShip(x, y);
+    if (withinBoard && notOnAnotherShip) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function _withinBoard(x, y) {
+    if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function _notOnAnotherShip(x, y) {
+    let textOnSpace = game.gameboardA.boardShipLayout[x][y];
+    if (textOnSpace == null) {
       return true;
     } else {
       return false;
