@@ -113,10 +113,11 @@ const dom = (function () {
     dom.domElements.winLoseMessage.textContent = `${player.playerName} won!`;
   }
 
+  let selectedShipNameWithIndex = '';
   function addDragAndDropEvents() {
-    // let draggableShips = [];
-    // let destroyerContainer = document.querySelector('.destroyer-container');
-    // draggableShips.push(destroyerContainer);
+    // document.addEventListener('drag', _drag);
+    // document.addEventListener('drop', _dragDrop);
+    // document.addEventListener('drop', _drop);
 
     let obj = dom.domElements.draggableShips;
     for (let prop in obj) {
@@ -126,23 +127,23 @@ const dom = (function () {
       shipDiv.addEventListener('dragstart', _dragStart);
       document.addEventListener('dragover', _dragOver);
       document.addEventListener('dragenter', _dragEnter);
+      shipDiv.addEventListener('mousedown', draggableClicked);
       // shipDiv.addEventListener('dragleave', _dragLeave);
       // shipDiv.addEventListener('dragend', _dragEnd);
-
-      // document.addEventListener('drag', _drag);
     }
-    // document.addEventListener('drop', _dragDrop);
-    // document.addEventListener('drop', _drop);
 
     // put drop event listener on each square in gridA
     for (let i = 0; i < gridA.children.length; i++) {
       gridA.children[i].addEventListener('drop', _drop);
     }
 
-    // dom.domElements.draggableShips.forEach((shipDiv) => {
-    //   console.log(shipDiv);
-    // });
-    // destroyerContainer.addEventListener('dragstart', dragStart);
+    // addevent listener when you click .. to capture which square of the ship you clicked
+  }
+
+  function draggableClicked(e) {
+    // get which square of the ship you clicked. ie. 'submarine-1'
+    selectedShipNameWithIndex = e.target.id;
+    console.log(selectedShipNameWithIndex);
   }
 
   // function _drag() {
@@ -180,28 +181,36 @@ const dom = (function () {
     let draggedShipName = idOfFirstDiv.slice(0, -2); //'destroyer' etc.
 
     console.log(indexOfDraggedShipClicked);
-    // are we on the first div? if so
-    //    on this div, add ship
+
+    // Which index of dragged ship are we in?
+    let indexOfClickedSquareInShip = Number(
+      selectedShipNameWithIndex.slice(-1)
+    );
+
+    // how many squares long is this ship?
+    let shipLength = game.ships[draggedShipName].length;
+
+    let newShipXStart = undefined;
+    let newShipYStart = undefined;
+    if (game.draggedShipsAreHorizontal) {
+      newShipXStart = xDropCoord - indexOfClickedSquareInShip;
+      newShipYStart = yDropCoord;
+    } else {
+      newShipXStart = xDropCoord;
+      newShipYStart = yDropCoord - indexOfClickedSquareInShip;
+    }
 
     // let newShip = Ship('destroyer', 2, [9,0], true)
-    let shipLength = game.ships[draggedShipName].length;
     let newShip = Ship(
       draggedShipName,
       shipLength,
-      [xDropCoord, yDropCoord],
+      [newShipXStart, newShipYStart],
       true
     );
 
     // let shipToAddNow = game.ships[draggedShipName];
     game.gameboardA.addShipToBoard(newShip);
     addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
-
-    // or are we on the second div of the ship when we dragged?
-    // if so..
-    //     on a div to the left, add ship
-    // gameboardA.addShipToBoard(someShip)
-
-    console.log(draggedShip.children.length);
   }
 
   // function _dragDrop() {

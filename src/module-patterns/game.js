@@ -11,13 +11,29 @@ const game = (function () {
   let gameboardA = Gameboard(dom.domElements.gridA);
   let gameboardB = Gameboard(dom.domElements.gridB);
   let itsPlayerAsTurn = true;
+  let draggedShipsAreHorizontal = true;
 
   let ships = {
-    destroyer: Ship('destroyer', 2, [0, 0], true),
-    submarine: Ship('submarine', 3, [0, 1], true),
-    cruiser: Ship('cruiser', 3, [0, 2], true),
-    battleship: Ship('battleship', 4, [0, 3], true),
-    carrier: Ship('carrier', 5, [0, 4], true),
+    destroyer: {
+      name: 'destroyer',
+      length: 2,
+    },
+    submarine: {
+      name: 'submarine',
+      length: 3,
+    },
+    cruiser: {
+      name: 'cruiser',
+      length: 3,
+    },
+    battleship: {
+      name: 'battleship',
+      length: 4,
+    },
+    carrier: {
+      name: 'carrier',
+      length: 5,
+    },
   };
 
   // setupGame();
@@ -135,6 +151,7 @@ const game = (function () {
     playerA,
     playerB,
     ships,
+    draggedShipsAreHorizontal,
   };
 })();
 
