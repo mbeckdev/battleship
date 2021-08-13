@@ -52,22 +52,7 @@ const game = (function () {
     // game.gameboardA.addShipToBoard(shipD);
     // game.gameboardA.addShipToBoard(shipE);
 
-    let bShipA = Ship('destroyer', 2, [0, 0], false);
-    let bShipB = Ship('submarine', 3, [1, 0], false);
-    let bShipC = Ship('cruiser', 3, [2, 0], false);
-    let bShipD = Ship('battleship', 4, [3, 0], false);
-    let bShipE = Ship('carrier', 5, [4, 0], false);
-    game.gameboardB.addShipToBoard(bShipA);
-    game.gameboardB.addShipToBoard(bShipB);
-    game.gameboardB.addShipToBoard(bShipC);
-    game.gameboardB.addShipToBoard(bShipD);
-    game.gameboardB.addShipToBoard(bShipE);
-
-    dom.createDivsInGrid(dom.domElements.gridA);
-    dom.createDivsInGrid(dom.domElements.gridB);
-
-    dom.addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
-    dom.addShipClassesToBoard(game.gameboardB, dom.domElements.gridB);
+    _setupPlayerBBoard();
 
     dom.maskGrid(dom.domElements.gridB);
 
@@ -76,6 +61,96 @@ const game = (function () {
 
     dom.disallowClickInGridA();
     dom.disallowClickInGridB();
+  }
+
+  function _findShipToAddToComputerGrid(shipName) {
+    // let bShipA = Ship('destroyer', 2, [0, 0], false);
+
+    // let keys = Object.keys(game.ships);
+    // let numberOfShips = keys.length;
+    // let randomShipIndex = Math.floor(Math.random() * numberOfShips);
+    // let aShip = game.ships[keys[randomShipIndex]];
+
+    // let randomShip = aShip.name;
+    let aShip = game.ships[shipName];
+    let shipLength = aShip.length;
+
+    // find random horizontal or vertical
+    // let isHorizontal = false;
+    let isHorizontal = undefined;
+    let trueOrFalseNumber = Math.floor(Math.random() * 2);
+    if (trueOrFalseNumber == 0) {
+      isHorizontal = true;
+    } else {
+      isHorizontal = false;
+    }
+    // find not taken space for starting coords
+    // let randomCoords = [1, 0];
+    let randomCoords = game.pickRandomCoords();
+    let randomCoordsAreValid = game.allShipCoordsAreValid(
+      randomCoords,
+      shipLength,
+      game.gameboardB,
+      isHorizontal
+    );
+    while (!randomCoordsAreValid) {
+      randomCoords = game.pickRandomCoords();
+      randomCoordsAreValid = game.allShipCoordsAreValid(
+        randomCoords,
+        shipLength,
+        game.gameboardB,
+        isHorizontal
+      );
+    }
+    console.log(
+      `${randomCoords[0]}-${randomCoords[1]} allshipCoords are valid starting at these coords`
+    );
+
+    let validRandomCoords = randomCoords;
+
+    let returnShip = Ship(
+      shipName,
+      shipLength,
+      validRandomCoords,
+      isHorizontal
+    );
+
+    return returnShip;
+  }
+
+  function _addShipsToComputerGrid() {
+    let bShipA = _findShipToAddToComputerGrid('destroyer');
+    game.gameboardB.addShipToBoard(bShipA);
+    let bShipB = _findShipToAddToComputerGrid('submarine');
+    game.gameboardB.addShipToBoard(bShipB);
+    let bShipC = _findShipToAddToComputerGrid('cruiser');
+    game.gameboardB.addShipToBoard(bShipC);
+    let bShipD = _findShipToAddToComputerGrid('battleship');
+    game.gameboardB.addShipToBoard(bShipD);
+    let bShipE = _findShipToAddToComputerGrid('carrier');
+    game.gameboardB.addShipToBoard(bShipE);
+
+    // let bShipA = Ship(
+    //   'destroyer',
+    //   2,
+    //   validRandomCoords,
+    //   randomHorizonalOrVertical
+    // );
+
+    // let bShipB = Ship('submarine', 3, [1, 0], false);
+    // let bShipC = Ship('cruiser', 3, [2, 0], false);
+    // let bShipD = Ship('battleship', 4, [3, 0], false);
+    // let bShipE = Ship('carrier', 5, [4, 0], false);
+  }
+
+  function _setupPlayerBBoard() {
+    _addShipsToComputerGrid();
+
+    dom.createDivsInGrid(dom.domElements.gridA);
+    dom.createDivsInGrid(dom.domElements.gridB);
+
+    dom.addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
+    dom.addShipClassesToBoard(game.gameboardB, dom.domElements.gridB);
   }
 
   function startGame() {
@@ -130,24 +205,25 @@ const game = (function () {
     let counter = 0;
     for (let shipContainer in dom.domElements.draggableShips) {
       let thisShip = dom.domElements.draggableShips[shipContainer];
-      console.log('asdf');
+      // console.log('asdf');
       if (!thisShip.classList.contains('hidden')) {
         counter++;
+        // console.log('asdf2');
       }
+      // console.log('asdf3');
     }
+    // console.log('asdf4');
     if (counter == 0) {
+      console.log('yep all ships have been placed');
       return true;
     }
+    console.log('nope all ships have NOT been placed');
   }
 
   function allowStart() {
-    // dom.domElements.startGameButton.classList.remove('soft-hidden');
-    // straight into the game
     dom.domElements.winLoseMessage.classList.add('soft-hidden');
     dom.domElements.startGameButton.textContent = 'Play';
     dom.domElements.startGameButton.classList.remove('soft-hidden');
-    // game.itsPlayerAsTurn = true;
-    // playerAsTurn();
   }
 
   function playerAsTurn() {
@@ -155,10 +231,10 @@ const game = (function () {
     game.itsPlayerAsTurn = true;
     dom.disallowClickInGridA();
     dom.allowClickInGridB();
+    console.log('playerAs Turn over');
     // then you click in grid B,
     // gridB has an eventlistener that says after click, go to
     //    game.handleHitInGridB()
-    console.log('playerAs Turn over');
   }
 
   function playerBsTurn() {
@@ -245,12 +321,12 @@ const game = (function () {
     console.log('handleHitInGridB end ');
   }
 
-  function areCoordsValid(x, y) {
+  function areCoordsValid(x, y, board) {
     let withinBoard = _withinBoard(x, y);
     let returnThing = false;
 
     if (withinBoard) {
-      let notOnAnotherShip = _notOnAnotherShip(x, y);
+      let notOnAnotherShip = _notOnAnotherShip(x, y, board);
       if (notOnAnotherShip) {
         returnThing = true;
       }
@@ -267,9 +343,76 @@ const game = (function () {
     }
   }
 
-  function _notOnAnotherShip(x, y) {
-    let textOnSpace = game.gameboardA.boardShipLayout[x][y];
+  function _notOnAnotherShip(x, y, board) {
+    // let textOnSpace = game.gameboardA.boardShipLayout[x][y];
+    let textOnSpace = board.boardShipLayout[x][y];
     if (textOnSpace == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function pickRandomCoords() {
+    let xCoord = Math.floor(Math.random() * 10);
+    let yCoord = Math.floor(Math.random() * 10);
+    return [xCoord, yCoord];
+  }
+
+  function returnAllCoordsOfShip(startCoords, shipLength, isHorizontal) {
+    let allShipCoords = [];
+    for (let i = 0; i < shipLength; i++) {
+      let newX = undefined;
+      let newY = undefined;
+      if (isHorizontal) {
+        newX = startCoords[0] + i;
+        newY = startCoords[1];
+      } else {
+        newX = startCoords[0];
+        newY = startCoords[1] + i;
+      }
+      allShipCoords.push([newX, newY]);
+    }
+
+    return allShipCoords;
+  }
+
+  function allShipCoordsAreValid(
+    startCoords,
+    shipLength,
+    board,
+    horizOrVertical
+  ) {
+    // find coords of other squares in ship. if any
+    let allShipCoords = []; //ie [[0,0],[1,0],[2,0]]
+    allShipCoords = game.returnAllCoordsOfShip(
+      [startCoords[0], startCoords[1]],
+      shipLength,
+      horizOrVertical
+    );
+    console.log('all ship coords = ' + allShipCoords);
+
+    // allShipCoords = [[0,0],[1,0]]
+    let allShipCoordsAreValid = 0;
+    for (let i = 0; i < allShipCoords.length; i++) {
+      if (
+        game.areCoordsValid(
+          allShipCoords[i][0],
+          allShipCoords[i][1],
+          // game.gameboardA
+          board
+        )
+      ) {
+        console.log(
+          `${allShipCoords[i][0]}-${allShipCoords[i][1]} are valid on board ${board.name}`
+        );
+      } else {
+        allShipCoordsAreValid++;
+      }
+    }
+
+    if (allShipCoordsAreValid == 0) {
+      // all are valid
       return true;
     } else {
       return false;
@@ -292,6 +435,9 @@ const game = (function () {
     isFirstGame,
     allShipsHaveBeenPlaced,
     allowStart,
+    returnAllCoordsOfShip,
+    allShipCoordsAreValid,
+    pickRandomCoords,
   };
 })();
 
