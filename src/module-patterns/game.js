@@ -41,16 +41,16 @@ const game = (function () {
 
   // setupGame();
   function setupGame() {
-    let shipA = Ship('destroyer', 2, [0, 0], true);
-    let shipB = Ship('submarine', 3, [0, 1], true);
-    let shipC = Ship('cruiser', 3, [0, 2], true);
-    let shipD = Ship('battleship', 4, [0, 3], true);
-    let shipE = Ship('carrier', 5, [0, 4], true);
-    game.gameboardA.addShipToBoard(shipA);
-    game.gameboardA.addShipToBoard(shipB);
-    game.gameboardA.addShipToBoard(shipC);
-    game.gameboardA.addShipToBoard(shipD);
-    game.gameboardA.addShipToBoard(shipE);
+    // let shipA = Ship('destroyer', 2, [0, 0], true);
+    // let shipB = Ship('submarine', 3, [0, 1], true);
+    // let shipC = Ship('cruiser', 3, [0, 2], true);
+    // let shipD = Ship('battleship', 4, [0, 3], true);
+    // let shipE = Ship('carrier', 5, [0, 4], true);
+    // game.gameboardA.addShipToBoard(shipA);
+    // game.gameboardA.addShipToBoard(shipB);
+    // game.gameboardA.addShipToBoard(shipC);
+    // game.gameboardA.addShipToBoard(shipD);
+    // game.gameboardA.addShipToBoard(shipE);
 
     let bShipA = Ship('destroyer', 2, [0, 0], false);
     let bShipB = Ship('submarine', 3, [1, 0], false);
@@ -79,50 +79,75 @@ const game = (function () {
   }
 
   function startGame() {
-    if (game.isFirstGame) {
+    if (
+      game.isFirstGame ||
+      dom.domElements.startGameButton.textContent == 'Play'
+    ) {
       dom.domElements.startGameButton.classList.add('soft-hidden');
+      game.itsPlayerAsTurn = true;
       playerAsTurn();
     } else {
       // restart game
-
-      //  clear dom grid
-      while (dom.domElements.gridA.firstChild) {
-        dom.domElements.gridA.removeChild(dom.domElements.gridA.lastChild);
-      }
-      while (dom.domElements.gridB.firstChild) {
-        dom.domElements.gridB.removeChild(dom.domElements.gridB.lastChild);
-      }
-
-      // clear gameboards.. or write over them
-      game.gameboardA = '';
-      game.gameboardB = '';
-      game.gameboardA = Gameboard(dom.domElements.gridA);
-      game.gameboardB = Gameboard(dom.domElements.gridB);
-
-      // clear computer guessing layout
-      game.playerB.guessLayout = [
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-      ];
+      _resetBoards();
 
       // start over
       setupGame();
+
+      // setup dom for playing mode
       dom.domElements.startGameButton.classList.add('soft-hidden');
       dom.hideWinner();
-      game.gameIsOver = false;
+      // game.gameIsOver = false;
 
-      game.itsPlayerAsTurn = true;
+      // wait for all ships placed before allowing play
+      // make draggableships appear in holding area
+      dom.resetDraggableShips();
       game.draggedShipsAreHorizontal = true;
-      playerAsTurn();
+      dom.domElements.winLoseMessage.textContent = 'Place your ships';
+      dom.domElements.winLoseMessage.classList.remove('soft-hidden');
+      // game.itsPlayerAsTurn = true;
+      // playerAsTurn();
     }
+  }
+
+  function _resetBoards() {
+    //  clear dom grid
+    while (dom.domElements.gridA.firstChild) {
+      dom.domElements.gridA.removeChild(dom.domElements.gridA.lastChild);
+    }
+    while (dom.domElements.gridB.firstChild) {
+      dom.domElements.gridB.removeChild(dom.domElements.gridB.lastChild);
+    }
+
+    // clear gameboards.. or write over them
+    game.gameboardA = '';
+    game.gameboardB = '';
+    game.gameboardA = Gameboard(dom.domElements.gridA);
+    game.gameboardB = Gameboard(dom.domElements.gridB);
+  }
+
+  function allShipsHaveBeenPlaced() {
+    console.log('allshipshavebeenplaced started');
+    let counter = 0;
+    for (let shipContainer in dom.domElements.draggableShips) {
+      let thisShip = dom.domElements.draggableShips[shipContainer];
+      console.log('asdf');
+      if (!thisShip.classList.contains('hidden')) {
+        counter++;
+      }
+    }
+    if (counter == 0) {
+      return true;
+    }
+  }
+
+  function allowStart() {
+    // dom.domElements.startGameButton.classList.remove('soft-hidden');
+    // straight into the game
+    dom.domElements.winLoseMessage.classList.add('soft-hidden');
+    dom.domElements.startGameButton.textContent = 'Play';
+    dom.domElements.startGameButton.classList.remove('soft-hidden');
+    // game.itsPlayerAsTurn = true;
+    // playerAsTurn();
   }
 
   function playerAsTurn() {
@@ -264,6 +289,9 @@ const game = (function () {
     ships,
     draggedShipsAreHorizontal,
     areCoordsValid,
+    isFirstGame,
+    allShipsHaveBeenPlaced,
+    allowStart,
   };
 })();
 

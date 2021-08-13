@@ -262,6 +262,11 @@ const dom = (function () {
       // hide ship
       draggedShip.classList.add('hidden');
     }
+
+    // if all ships have been dropped, enable startgame button
+    if (game.allShipsHaveBeenPlaced()) {
+      game.allowStart();
+    }
   }
 
   // function _dragDrop() {
@@ -317,6 +322,13 @@ const dom = (function () {
     }
   }
 
+  function resetDraggableShips() {
+    for (let shipContainer in dom.domElements.draggableShips) {
+      let thisShip = dom.domElements.draggableShips[shipContainer];
+      thisShip.classList.remove('hidden');
+    }
+  }
+
   return {
     addDragAndDropEvents,
     addShipClassesToBoard,
@@ -332,6 +344,7 @@ const dom = (function () {
     showWinner,
     hideWinner,
     addEventListenerToButtons,
+    resetDraggableShips,
   };
 })();
 
