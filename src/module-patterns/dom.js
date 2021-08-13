@@ -12,6 +12,7 @@ const dom = (function () {
     gridA: document.getElementById('gridA'),
     gridB: document.getElementById('gridB'),
     winLoseMessage: document.getElementById('win-lose-message'),
+    startGameButton: document.getElementById('start-game-button'),
     rotateShipButton: document.getElementById('rotate-ship-button'),
     shipHolder: document.getElementById('ship-holder'),
     draggableShips: {
@@ -113,6 +114,11 @@ const dom = (function () {
 
   function showWinner(player) {
     dom.domElements.winLoseMessage.textContent = `${player.playerName} won!`;
+    dom.domElements.winLoseMessage.classList.remove('soft-hidden');
+  }
+
+  function hideWinner() {
+    dom.domElements.winLoseMessage.classList.add('soft-hidden');
   }
 
   let selectedShipNameWithIndex = '';
@@ -281,6 +287,7 @@ const dom = (function () {
 
   function addEventListenerToButtons() {
     dom.domElements.rotateShipButton.addEventListener('click', rotateShips);
+    dom.domElements.startGameButton.addEventListener('click', game.startGame);
   }
 
   function rotateShips() {
@@ -323,6 +330,7 @@ const dom = (function () {
     showHit,
     showMiss,
     showWinner,
+    hideWinner,
     addEventListenerToButtons,
   };
 })();

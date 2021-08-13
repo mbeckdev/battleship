@@ -1,4 +1,5 @@
 'use strict';
+import game from '../module-patterns/game.js';
 import Gameboard from './gameboardFactory.js';
 
 const Player = function (aPlayerName) {
@@ -8,20 +9,8 @@ const Player = function (aPlayerName) {
     gameBoard.receiveAttack(x, y);
   }
 
-  let _guessLayout = [
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-  ];
-
   function computerTakeRandomGuess() {
+    console.log('computerTakesrandomgues start');
     // should not guess the same square twice
     let max = 10;
     let xRandom = Math.floor(Math.random() * max);
@@ -29,12 +18,16 @@ const Player = function (aPlayerName) {
     let needToGuessMore = true;
 
     //check if it's been guessed before
+    console.log('while loop started for computer guessing');
     while (needToGuessMore) {
-      if (_guessLayout[xRandom][yRandom] == null) {
-        // space is empty
+      if (game.gameboardA.boardHitAndMissLayout[xRandom][yRandom] == null) {
+        //space is empty
+        console.log('space is good to guess in');
         needToGuessMore = false;
-        _guessLayout[xRandom][yRandom] = 'guessed';
+        // guessLayout[xRandom][yRandom] = 'guessed';
+        console.log(`guess added to layout in ${xRandom}-${yRandom}`);
       } else {
+        console.log('while loop - space has been guessed before, try again');
         // space has been guessed before
         xRandom = Math.floor(Math.random() * max);
         yRandom = Math.floor(Math.random() * max);

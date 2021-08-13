@@ -85,6 +85,9 @@ body {
   display: none;
   /* visibility: hidden; */
 }
+.soft-hidden {
+  visibility: hidden;
+}
 
 .ship-holder-verticals {
   flex-direction: row;

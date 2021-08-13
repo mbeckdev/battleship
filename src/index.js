@@ -7,7 +7,7 @@ import css from './styles.css';
 import game from './module-patterns/game.js';
 
 game.setupGame();
-game.startGame();
+// game.startGame();
 // game;
 // console.log(dom.domElements.gridA);
 console.log('asdf');

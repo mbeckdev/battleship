@@ -12,6 +12,9 @@ const game = (function () {
   let gameboardB = Gameboard(dom.domElements.gridB);
   let itsPlayerAsTurn = true;
   let draggedShipsAreHorizontal = true;
+  let gameState = 'initial'; // initial, playing, gameover
+  let isFirstGame = true;
+  let gameIsOver = false;
 
   let ships = {
     destroyer: {
@@ -43,102 +46,178 @@ const game = (function () {
     let shipC = Ship('cruiser', 3, [0, 2], true);
     let shipD = Ship('battleship', 4, [0, 3], true);
     let shipE = Ship('carrier', 5, [0, 4], true);
-    gameboardA.addShipToBoard(shipA);
-    gameboardA.addShipToBoard(shipB);
-    gameboardA.addShipToBoard(shipC);
-    gameboardA.addShipToBoard(shipD);
-    gameboardA.addShipToBoard(shipE);
+    game.gameboardA.addShipToBoard(shipA);
+    game.gameboardA.addShipToBoard(shipB);
+    game.gameboardA.addShipToBoard(shipC);
+    game.gameboardA.addShipToBoard(shipD);
+    game.gameboardA.addShipToBoard(shipE);
 
     let bShipA = Ship('destroyer', 2, [0, 0], false);
     let bShipB = Ship('submarine', 3, [1, 0], false);
     let bShipC = Ship('cruiser', 3, [2, 0], false);
     let bShipD = Ship('battleship', 4, [3, 0], false);
     let bShipE = Ship('carrier', 5, [4, 0], false);
-    gameboardB.addShipToBoard(bShipA);
-    gameboardB.addShipToBoard(bShipB);
-    gameboardB.addShipToBoard(bShipC);
-    gameboardB.addShipToBoard(bShipD);
-    gameboardB.addShipToBoard(bShipE);
+    game.gameboardB.addShipToBoard(bShipA);
+    game.gameboardB.addShipToBoard(bShipB);
+    game.gameboardB.addShipToBoard(bShipC);
+    game.gameboardB.addShipToBoard(bShipD);
+    game.gameboardB.addShipToBoard(bShipE);
 
     dom.createDivsInGrid(dom.domElements.gridA);
     dom.createDivsInGrid(dom.domElements.gridB);
 
-    dom.addShipClassesToBoard(gameboardA, dom.domElements.gridA);
-    dom.addShipClassesToBoard(gameboardB, dom.domElements.gridB);
+    dom.addShipClassesToBoard(game.gameboardA, dom.domElements.gridA);
+    dom.addShipClassesToBoard(game.gameboardB, dom.domElements.gridB);
 
     dom.maskGrid(dom.domElements.gridB);
 
     dom.addDragAndDropEvents();
     dom.addEventListenerToButtons();
+
+    dom.disallowClickInGridA();
+    dom.disallowClickInGridB();
   }
 
-  let gameIsOver = false;
   function startGame() {
-    playerAsTurn();
+    if (game.isFirstGame) {
+      dom.domElements.startGameButton.classList.add('soft-hidden');
+      playerAsTurn();
+    } else {
+      // restart game
+
+      //  clear dom grid
+      while (dom.domElements.gridA.firstChild) {
+        dom.domElements.gridA.removeChild(dom.domElements.gridA.lastChild);
+      }
+      while (dom.domElements.gridB.firstChild) {
+        dom.domElements.gridB.removeChild(dom.domElements.gridB.lastChild);
+      }
+
+      // clear gameboards.. or write over them
+      game.gameboardA = '';
+      game.gameboardB = '';
+      game.gameboardA = Gameboard(dom.domElements.gridA);
+      game.gameboardB = Gameboard(dom.domElements.gridB);
+
+      // clear computer guessing layout
+      game.playerB.guessLayout = [
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+      ];
+
+      // start over
+      setupGame();
+      dom.domElements.startGameButton.classList.add('soft-hidden');
+      dom.hideWinner();
+      game.gameIsOver = false;
+
+      game.itsPlayerAsTurn = true;
+      game.draggedShipsAreHorizontal = true;
+      playerAsTurn();
+    }
   }
 
   function playerAsTurn() {
+    console.log('playerAs Turn');
     game.itsPlayerAsTurn = true;
     dom.disallowClickInGridA();
     dom.allowClickInGridB();
     // then you click in grid B,
     // gridB has an eventlistener that says after click, go to
     //    game.handleHitInGridB()
+    console.log('playerAs Turn over');
   }
 
   function playerBsTurn() {
+    console.log('playerBs Turn');
     // Computer turn
     game.itsPlayerAsTurn = false;
     //   - you should not be allowed to click.
+    console.log('now call disallowClickingridB');
     dom.disallowClickInGridB();
     // dom.allowClickInGridA();
 
     // Computer takes a turn here
-    let newCoords = playerB.computerTakeRandomGuess();
-    playerB.attack(newCoords[0], newCoords[1], gameboardA);
+    console.log('computer will take a turn now');
+    let newCoords = game.playerB.computerTakeRandomGuess();
+
+    game.playerB.attack(newCoords[0], newCoords[1], game.gameboardA);
 
     //           - set a bit of a wait after computer's turn is over
     //             setTimeout(console.log('waiting'), 1 * 3000);
     //   - check GameOver
+    console.log('playerBs Turn calls checkGameOver');
     checkGameOver();
-    if (!gameIsOver) {
+    console.log('playerBs Turn over');
+    if (!game.gameIsOver) {
+      console.log('game.gameIsOver is false, so now call playerAs turn');
       playerAsTurn();
     }
     //   - Switch whose turn
   }
 
   function checkGameOver() {
-    if (gameboardA.allShipsSunk()) {
-      gameIsOver = true;
-      dom.showWinner(game.playerB);
-      dom.disallowClickInGridA();
-      dom.disallowClickInGridB();
+    console.log('checkGameOver starts');
+    game.gameIsOver = false;
+    console.log('checkGameOver now checks for allshipssunk');
+    if (game.gameboardA.allShipsSunk()) {
+      console.log(
+        'checkGameOver ends - all sunk in gameboardA, so call handleGameOver(playerB)'
+      );
+      handleGameOver(game.playerB);
     }
-    if (gameboardB.allShipsSunk()) {
-      gameIsOver = true;
-      dom.showWinner(game.playerA);
-      dom.disallowClickInGridA();
-      dom.disallowClickInGridB();
+    if (game.gameboardB.allShipsSunk()) {
+      console.log(
+        'checkGameOver ends - all sunk in gameboardB, so call handleGameOver(playerA)'
+      );
+      handleGameOver(game.playerA);
     }
+  }
+
+  function handleGameOver(winner) {
+    console.log('handlegameover starts');
+    game.gameIsOver = true;
+    dom.showWinner(winner);
+    dom.disallowClickInGridA();
+    dom.disallowClickInGridB();
+    dom.domElements.startGameButton.textContent = 'Play Again';
+    dom.domElements.startGameButton.classList.remove('soft-hidden');
+    game.isFirstGame = false;
+    console.log('handlegameover ends');
   }
 
   function handleHitInGridA(e) {
     // find x and y of click
-    console.log(e.target);
+    // console.log(e.target);
+    console.log('handleHitInGridA start');
     let xCoord = e.target.dataset.id[0];
     let yCoord = e.target.dataset.id[1];
-    playerB.attack(xCoord, yCoord, gameboardA);
+    game.playerB.attack(xCoord, yCoord, game.gameboardA);
+    console.log('handleHitInGridA end');
   }
 
   function handleHitInGridB(e) {
+    console.log('handleHitInGridB start');
     let xCoord = e.target.dataset.id[0];
     let yCoord = e.target.dataset.id[1];
-    playerA.attack(xCoord, yCoord, gameboardB);
+    game.playerA.attack(xCoord, yCoord, game.gameboardB);
 
+    console.log('handleHitInGridB calls checkgameOver');
     checkGameOver();
-    if (!gameIsOver) {
+    if (!game.gameIsOver) {
+      console.log('handleHitInGridB calls checkgameOver - and its not over');
+
       playerBsTurn();
     }
+    console.log('handleHitInGridB end ');
   }
 
   function areCoordsValid(x, y) {
