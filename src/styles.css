@@ -44,7 +44,7 @@ main {
 
 /* *********** DRAG WINDOW *********** */
 #ship-holder {
-  width: 200px;
+  /* width: 200px; */
   /* height: 120px; */
   /* background-color: blue; */
   margin: 10px;

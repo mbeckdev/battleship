@@ -154,16 +154,22 @@ const game = (function () {
   }
 
   function startGame() {
+    // if it's the first time or if the button says 'Play"
     if (
       game.isFirstGame ||
       dom.domElements.startGameButton.textContent == 'Play'
     ) {
       dom.domElements.startGameButton.classList.add('soft-hidden');
+
       game.itsPlayerAsTurn = true;
       playerAsTurn();
+      dom.domElements.gridB.classList.remove('soft-hidden');
+
+      // If the button says 'play again'
     } else {
-      // restart game
+      // restart game  - you hit play again
       _resetBoards();
+      dom.domElements.gridB.classList.add('soft-hidden');
 
       // start over
       setupGame();
@@ -176,7 +182,10 @@ const game = (function () {
       // wait for all ships placed before allowing play
       // make draggableships appear in holding area
       dom.resetDraggableShips();
+
       game.draggedShipsAreHorizontal = true;
+      dom.rotateShips();
+      dom.domElements.rotateShipButton.classList.remove('soft-hidden');
       dom.domElements.winLoseMessage.textContent = 'Place your ships';
       dom.domElements.winLoseMessage.classList.remove('soft-hidden');
       // game.itsPlayerAsTurn = true;
@@ -224,6 +233,7 @@ const game = (function () {
     dom.domElements.winLoseMessage.classList.add('soft-hidden');
     dom.domElements.startGameButton.textContent = 'Play';
     dom.domElements.startGameButton.classList.remove('soft-hidden');
+    dom.domElements.rotateShipButton.classList.add('soft-hidden');
   }
 
   function playerAsTurn() {

@@ -320,6 +320,7 @@ const dom = (function () {
     hideWinner,
     addEventListenerToButtons,
     resetDraggableShips,
+    rotateShips,
   };
 })();
 
