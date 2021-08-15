@@ -163,14 +163,14 @@ const game = (function () {
 
       game.itsPlayerAsTurn = true;
       playerAsTurn();
-      dom.domElements.gridB.classList.remove('soft-hidden');
+      dom.domElements.gridB.classList.remove('hidden');
       dom.domElements.playerBGridLabel.classList.remove('soft-hidden');
+      // dom.domElements.gridB.classList.remove('hidden');
 
       // If the button says 'play again'
     } else {
       // restart game  - you hit play again
       _resetBoards();
-      dom.domElements.gridB.classList.add('soft-hidden');
       dom.domElements.playerBGridLabel.classList.add('soft-hidden');
 
       // start over
@@ -190,6 +190,8 @@ const game = (function () {
       dom.domElements.rotateShipButton.classList.remove('hidden');
       dom.domElements.winLoseMessage.textContent = 'Place your ships';
       dom.domElements.winLoseMessage.classList.remove('soft-hidden');
+      dom.domElements.gridB.classList.add('hidden');
+      // dom.domElements.gridB.classList.add('hidden');
       // game.itsPlayerAsTurn = true;
       // playerAsTurn();
     }

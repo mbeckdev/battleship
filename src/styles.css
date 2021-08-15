@@ -90,6 +90,25 @@ button:active {
 h3 {
   margin-bottom: -5px;
 }
+
+#start-game-button {
+  margin: 10px 0;
+}
+
+#containers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 300px; */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 300px; */
+}
+
 /* *********** DRAG WINDOW *********** */
 #ship-holder {
   /* width: 200px; */
@@ -138,10 +157,6 @@ h3 {
 .ship-holder-square {
 }
 
-.hidden {
-  display: none;
-  /* visibility: hidden; */
-}
 .soft-hidden {
   visibility: hidden;
 }
@@ -196,3 +211,28 @@ h3 {
   background-color: var(--main-blue);
 }
 /* *********** GRID SYTLING END *********** */
+
+.hidden {
+  display: none;
+  /* visibility: hidden; */
+}
+
+/* Desktop Layout Below */
+@media only screen and (min-width: 600px) {
+  #containers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* align-items: center;
+    width: 300px; */
+  }
+
+  button {
+    width: 150px;
+  }
+  /* #rotate-container {
+    width: 130px;
+  } */
+}
+/* Desktop Layout End */
