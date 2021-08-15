@@ -217,7 +217,7 @@ h3 {
   /* visibility: hidden; */
 }
 
-/* Desktop Layout Below */
+/* ***** Desktop Layout Below ***** */
 @media only screen and (min-width: 600px) {
   #containers {
     display: flex;
@@ -235,4 +235,4 @@ h3 {
     width: 130px;
   } */
 }
-/* Desktop Layout End */
+/* ***** Desktop Layout End ***** */
