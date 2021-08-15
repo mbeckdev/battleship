@@ -15,6 +15,8 @@
   box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 .example-of-organizing {
   /* Positioning Block */
   position: absolute;
@@ -45,6 +47,12 @@ body {
   background-color: var(--main-teal);
   display: flex;
   justify-content: center;
+  font-family: 'Anton', sans-serif;
+  text-shadow: 0 0 1px var(--main-white);
+}
+
+button {
+  font-family: sans-serif;
 }
 
 main {
