@@ -15,6 +15,7 @@ const dom = (function () {
     startGameButton: document.getElementById('start-game-button'),
     rotateShipButton: document.getElementById('rotate-ship-button'),
     shipHolder: document.getElementById('ship-holder'),
+    playerBGridLabel: document.getElementById('player-b-grid-label'),
     draggableShips: {
       destroyerContainer: document.querySelector('.destroyer-container'),
       submarineContainer: document.querySelector('.submarine-container'),

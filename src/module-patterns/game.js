@@ -164,12 +164,14 @@ const game = (function () {
       game.itsPlayerAsTurn = true;
       playerAsTurn();
       dom.domElements.gridB.classList.remove('soft-hidden');
+      dom.domElements.playerBGridLabel.classList.remove('soft-hidden');
 
       // If the button says 'play again'
     } else {
       // restart game  - you hit play again
       _resetBoards();
       dom.domElements.gridB.classList.add('soft-hidden');
+      dom.domElements.playerBGridLabel.classList.add('soft-hidden');
 
       // start over
       setupGame();
@@ -185,7 +187,7 @@ const game = (function () {
 
       game.draggedShipsAreHorizontal = true;
       dom.rotateShips();
-      dom.domElements.rotateShipButton.classList.remove('soft-hidden');
+      dom.domElements.rotateShipButton.classList.remove('hidden');
       dom.domElements.winLoseMessage.textContent = 'Place your ships';
       dom.domElements.winLoseMessage.classList.remove('soft-hidden');
       // game.itsPlayerAsTurn = true;
@@ -233,7 +235,7 @@ const game = (function () {
     dom.domElements.winLoseMessage.classList.add('soft-hidden');
     dom.domElements.startGameButton.textContent = 'Play';
     dom.domElements.startGameButton.classList.remove('soft-hidden');
-    dom.domElements.rotateShipButton.classList.add('soft-hidden');
+    dom.domElements.rotateShipButton.classList.add('hidden');
   }
 
   function playerAsTurn() {
